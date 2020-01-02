@@ -14,7 +14,6 @@ import net.minecraft.client.render.RenderLayer;
 public class ClientReference implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), BlockInit.ENDERTELEPORTER);
         BlockEntityRendererRegistry.INSTANCE.register(EntityInit.ENDERTELEPORTER, EnderTeleporterEntityRenderer::new);
 
         ClientSidePacketRegistry.INSTANCE.register(NetworkInit.TELEPORTPACKET, new TeleporterpacketS2C());
