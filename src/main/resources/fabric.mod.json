@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.duskitty.enderpillars.Reference"
+      "io.github.duskitty.enderpillars.Reference"
     ],
     "client": [
-      "com.duskitty.enderpillars.ClientReference"
+      "io.github.duskitty.enderpillars.ClientReference"
     ]
   },
   "mixins": [

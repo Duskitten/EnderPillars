@@ -21,8 +21,8 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modRuntime(group: "io.github.prospector", name: "modmenu", version: "1.8.1+build.17")
-	modRuntime(group: "io.github.prospector", name: "orderly", version: "1.2.0+build.1-1.15")
+	modRuntime(group: "io.com.github.prospector", name: "modmenu", version: "1.8.1+build.17")
+	modRuntime(group: "io.com.github.prospector", name: "orderly", version: "1.2.0+build.1-1.15")
 	modRuntime("me.shedaniel:RoughlyEnoughItems:3.2.28")
 
 	include "me.sargunvohra.mcmods:auto-config:v1.2.0+mc1.14.4"
