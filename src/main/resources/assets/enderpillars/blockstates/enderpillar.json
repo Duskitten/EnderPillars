@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "":  { "model": "enderpillars:block/enderpillar" }
+    }
+}

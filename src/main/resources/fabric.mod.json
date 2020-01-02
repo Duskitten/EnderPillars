@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "enderpillars",
+  "version": "0.0.1",
+
+  "name": "Ender Pillars",
+  "description": "Warp between different pillars in the world, fast travel basically.",
+  "authors": [
+    "Duskitty"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/enderpillars/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.duskitty.enderpillars.Reference"
+    ],
+    "client": [
+      "com.duskitty.enderpillars.ClientReference"
+    ]
+  },
+  "mixins": [
+    "enderpillars.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
