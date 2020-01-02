@@ -1,5 +1,6 @@
 package io.github.duskitty.enderpillars.container;
 
+import net.fabricmc.api.Environment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,15 +35,15 @@ public class WarpStorage
 
 	public boolean setWarp(Warp warp)
 	{
-		System.out.println(warps);
-		String name = warp.getName();
+		String name = warp.getUniqueID();
 		int found = IntStream.range(0, warps.size())
-			.filter(i -> name.equals(warps.get(i).getName()))
+			.filter(i -> name.equals(warps.get(i).getUniqueID()))
 			.findFirst()
 			.orElse(-1);
 		if (found == -1)
 		{
 			warps.add(warp);
+			System.out.println(warps.size());
 			return false;
 		}
 		else
@@ -52,10 +53,12 @@ public class WarpStorage
 		}
 	}
 
+
+
 	public boolean deleteWarp(String name)
 	{
 		int found = IntStream.range(0, warps.size())
-			.filter(i -> name.equals(warps.get(i).getName()))
+			.filter(i -> name.equals(warps.get(i).getUniqueID()))
 			.findFirst()
 			.orElse(-1);
 		if (found == -1)
@@ -83,12 +86,14 @@ public class WarpStorage
 	public static void readNBT(ServerPlayerEntity pl, CompoundTag tag)
 	{
 		List<Warp> warps = new ArrayList<>();
-		ListTag list = (ListTag) tag.get("enderpillars.warpstorage");
+		ListTag list = (ListTag) tag.get("warpstorage");
+
 		if (list != null)
 			for (int i = 0; i < list.size(); i++)
 			{
 				CompoundTag compound = list.getCompound(i);
 				warps.add(new Warp(
+						compound.getString("uniqueId"),
 					compound.getString("name"),
 					compound.getString("dimensionId"),
 					compound.getDouble("x"),
@@ -107,6 +112,7 @@ public class WarpStorage
 		for (Warp warp : warps)
 		{
 			CompoundTag compound = new CompoundTag();
+			compound.putString("uniqueId", warp.getUniqueID());
 			compound.putString("name", warp.getName());
 			compound.putString("dimensionId", warp.getDimensionId());
 			compound.putDouble("x", warp.getX());
@@ -116,7 +122,7 @@ public class WarpStorage
 			compound.putFloat("pitch", warp.getPitch());
 			list.add(compound);
 		}
-		tag.put("enderpillars.warpstorage", list);
+		tag.put("warpstorage", list);
 	}
 
 	public void writeToBuf(PacketByteBuf buf)
@@ -124,6 +130,7 @@ public class WarpStorage
 		buf.writeInt(warps.size());
 		for (Warp warp : warps)
 		{
+			buf.writeString(warp.getUniqueID());
 			buf.writeString(warp.getName());
 			buf.writeString(warp.getDimensionId());
 			buf.writeDouble(warp.getX());
@@ -142,6 +149,7 @@ public class WarpStorage
 		for (int i = 0; i < length; i++)
 		{
 			Warp warp = new Warp(
+					buf.readString(),
 					buf.readString(),
 					buf.readString(),
 					buf.readDouble(),

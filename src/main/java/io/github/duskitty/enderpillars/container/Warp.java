@@ -2,16 +2,18 @@ package io.github.duskitty.enderpillars.container;
 
 public class Warp {
 
-    public static String NAME;
-    public static String ID;
-    public static double X;
-    public static double Y;
-    public static double Z;
-    public static float YAW;
-    public static float PITCH;
+    public  String UNID;
+    public  String NAME;
+    public  String ID;
+    public  double X;
+    public  double Y;
+    public  double Z;
+    public  float YAW;
+    public float PITCH;
 
 
-    public Warp(String name, String id, double x, double y, double z, float yaw, float pitch) {
+    public Warp(String randomID,String name, String id, double x, double y, double z, float yaw, float pitch) {
+        UNID = randomID;
         NAME = name;
         ID = id;
         X = x;
@@ -20,6 +22,8 @@ public class Warp {
         YAW = yaw;
         PITCH = pitch;
     }
+
+    public String getUniqueID(){ return this.UNID; }
 
     public String getName(){
        return this.NAME;

@@ -4,6 +4,7 @@ package io.github.duskitty.enderpillars.block;
 import io.github.duskitty.enderpillars.block.entity.EnderTeleporterEntity;
 import io.github.duskitty.enderpillars.container.Warp;
 import io.github.duskitty.enderpillars.container.WarpStorage;
+import io.github.duskitty.enderpillars.init.ItemInit;
 import io.github.duskitty.enderpillars.init.NetworkInit;
 import io.github.duskitty.enderpillars.state.property.Properties;
 import io.netty.buffer.Unpooled;
@@ -54,8 +55,7 @@ public class EnderTeleporterBlock extends BlockWithEntity {
             player.getMainHandStack().decrement(1);
             world.setBlockState(pos, state.with(HASPEARL, true));
             if(!world.isClient()) {
-                    System.out.println("SetSpawn!");
-                    WarpStorage.fromPlayer((ServerPlayerEntity) player).setWarp(new Warp(pos.toString(), world.dimension.getType().toString(), player.getX(), player.getY(), player.getZ(), player.pitch, player.yaw));
+                    WarpStorage.fromPlayer((ServerPlayerEntity) player).setWarp(new Warp(String.valueOf(pos.getX())+String.valueOf(pos.getY())+String.valueOf(pos.getZ()),"Found Pillar", world.dimension.getType().toString(), player.getX(), player.getY(), player.getZ(), player.pitch, player.yaw));
             }
             player.setPlayerSpawn(player.getBlockPos(),true,false);
 
@@ -97,8 +97,13 @@ public class EnderTeleporterBlock extends BlockWithEntity {
             world.spawnEntity(new ItemEntity(world, (double)pos.getX()+0.5, (double)pos.getY()+1, (double)pos.getZ()+0.5, new ItemStack(Items.ENDER_PEARL)));
             world.playLevelEvent(player, 2001, pos, getRawIdFromState(state));
         }
-
-        player.setPlayerSpawn(world.getSpawnPos(),true,true);
+        if(!world.isClient()){
+            if(WarpStorage.fromPlayer((ServerPlayerEntity) player).deleteWarp(String.valueOf(pos.getX())+String.valueOf(pos.getY())+String.valueOf(pos.getZ()))){
+                System.out.println(String.valueOf(pos.getX())+String.valueOf(pos.getY())+String.valueOf(pos.getZ()));
+                player.setPlayerSpawn(world.getSpawnPos(),true,true);
+            }
+        }
+        world.spawnEntity(new ItemEntity(world, (double)pos.getX()+0.5, (double)pos.getY()+1, (double)pos.getZ()+0.5, new ItemStack(ItemInit.ENDERTELEPORTER)));
         world.playLevelEvent(player, 2001, pos, getRawIdFromState(state));
     }
 

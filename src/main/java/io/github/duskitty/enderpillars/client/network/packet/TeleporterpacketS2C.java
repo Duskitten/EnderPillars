@@ -17,6 +17,7 @@ public class TeleporterpacketS2C implements PacketConsumer {
 
     public void process(WarpStorage warp) {
         MinecraftClient.getInstance().openScreen(new NewTeleportScreen(warp.getWarps()));
+
     }
 
 }

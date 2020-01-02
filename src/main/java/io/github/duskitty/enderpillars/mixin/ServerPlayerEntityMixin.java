@@ -14,11 +14,11 @@ public class ServerPlayerEntityMixin
     @Inject(at = @At("TAIL"), method = "readCustomDataFromTag")
     public void onReadCustomDataFromTag(CompoundTag tag, CallbackInfo ci)
     {
-        WarpStorage.readNBT((ServerPlayerEntity)(Object) this, tag);
+        WarpStorage.readNBT((ServerPlayerEntity)(Object)this, tag);
     }
     @Inject(at = @At("TAIL"), method = "writeCustomDataToTag")
     public void onWriteCustomDataToTag(CompoundTag tag, CallbackInfo ci)
     {
-        WarpStorage.writeNBT((ServerPlayerEntity)(Object) this, tag);
+        WarpStorage.writeNBT((ServerPlayerEntity)(Object)this, tag);
     }
 }
