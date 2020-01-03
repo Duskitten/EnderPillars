@@ -30,7 +30,7 @@ public class WarpStorage
 
 	public Optional<Warp> getWarp(String name)
 	{
-		return warps.stream().filter(w -> w.getName().equals(name)).findFirst();
+		return warps.stream().filter(w -> w.getUniqueID().equals(name)).findFirst();
 	}
 
 	public boolean setWarp(Warp warp)
