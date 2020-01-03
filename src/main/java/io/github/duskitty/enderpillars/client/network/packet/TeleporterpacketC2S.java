@@ -30,15 +30,12 @@ public class TeleporterpacketC2S implements PacketConsumer {
     }
 
     public void process(String warpID, PlayerEntity player) {
-        List<Warp> warps = WarpStorage.fromPlayer((ServerPlayerEntity) player).getWarps();
-        for (Warp warp : warps)
-        {
-            if(warpID == warp.UNID){
-                System.out.println("Caught!");
-                //player.teleport(warp.getX(),warp.getY(),warp.getZ(),true);
-            }
-        }
+        Optional<Warp> warp = WarpStorage.fromPlayer((ServerPlayerEntity) player).getWarp(warpID);
 
+        if(warp.isPresent()){
+            Warp newwarp = warp.get();
+            ((ServerPlayerEntity) player).teleport(newwarp.getX(),newwarp.getY(),newwarp.getZ(),true);
+        };
     }
 
 }
