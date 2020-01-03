@@ -36,20 +36,17 @@ public class NewTeleportScreen extends Screen {
         buttonsClear();
         this.minecraft.keyboard.enableRepeatEvents(true);
         List<Warp> warps = this.playerwarps;
-        for(int i = 6 * OffsetNumber; i < 6 * (OffsetNumber + 1); i++){
+        for (int i = 0; i < 6; i++){
             if(6 * OffsetNumber + i >= warps.size())
                 break;
-            Warp warp = warps.get(i);
-                this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2 -105 +(21*(i% 6)), 200, 20,warp.getUniqueID(), (buttonWidget) -> {
+            Warp warp = warps.get(i+6 * OffsetNumber);
+                this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2 -105 +(21*(i)), 200, 20,warp.getUniqueID(), (buttonWidget) -> {
                     PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                     System.out.println(buttonWidget.getMessage());
-                    passedData.writeDouble(warp.getX());
-                    passedData.writeDouble(warp.getY());
-                    passedData.writeDouble(warp.getZ());
+                    passedData.writeString(warp.getUniqueID());
                     ClientSidePacketRegistry.INSTANCE.sendToServer(NetworkInit.TELEPORTPLAYERPACKET, passedData);
-                    this.finishEditing();
-                    MinecraftClient.getInstance().player.setPositionAndAngles(warp.getX(),warp.getY(),warp.getZ(),warp.getYaw(),warp.getPitch());
                     MinecraftClient.getInstance().player.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT,1,1);
+                    this.finishEditing();
 
             }));
             }
@@ -60,11 +57,12 @@ public class NewTeleportScreen extends Screen {
                 init();
             }));
         }
-
+        if(OffsetNumber != warps.size()/6) {
             this.addButton(new ButtonWidget(this.width / 2 + 25, this.height / 2 + 60, 75, 20, "Next", (buttonWidget) -> {
                 OffsetNumber += 1;
                 init();
             }));
+        }
     }
 
     public void removed() {

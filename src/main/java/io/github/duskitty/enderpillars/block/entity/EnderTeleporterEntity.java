@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 public class EnderTeleporterEntity extends BlockEntity {
 
     public PlayerEntity entity = null;
+    public String Stonename = "";
 
     public EnderTeleporterEntity() {
         super(EntityInit.ENDERTELEPORTER);
